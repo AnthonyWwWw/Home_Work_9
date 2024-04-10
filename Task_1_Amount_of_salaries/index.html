@@ -30,7 +30,7 @@
                   if (typeof obj[key] === 'object') {// Перевіряємо, чи значення властивості є об'єктом
                       if (Array.isArray(obj[key])) {// Перевіряємо, чи значення є масивом
                           for (let value of obj[key]) {
-                              if (value && typeof value === 'object' && !isNaN(value.salary) && 'salary' in value) {   // Перевіряємо, чи елемент є об'єктом, має властивість "salary" та її значення не є NaN
+                              if (value && typeof value === 'object' && !isNaN(value.salary) && value.hasOwnProperty('salary')) {   // Перевіряємо, чи елемент є об'єктом, має властивість "salary" та її значення не є NaN
                                   result += value.salary;
                               } else {
                                   // Викликаємо функцію logError, якщо знайдено неправильне значення
