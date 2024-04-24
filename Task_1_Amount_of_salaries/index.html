@@ -23,32 +23,27 @@
 
         Об'єкт може містити невідому кількість департаментів та співробітників
         */
-          function isNested(obj) {
-              let result = 0;
+          function calculateTotalSalary(obj) {
+              let totalSalary = 0;
 
               for (let key in obj) {
-                  if (typeof obj[key] === 'object') {// Перевіряємо, чи значення властивості є об'єктом
-                      if (Array.isArray(obj[key])) {// Перевіряємо, чи значення є масивом
+                      if (Array.isArray(obj[key])) {
                           for (let value of obj[key]) {
-                              if (value && typeof value === 'object' && !isNaN(value.salary) && value.hasOwnProperty('salary')) {   // Перевіряємо, чи елемент є об'єктом, має властивість "salary" та її значення не є NaN
-                                  result += value.salary;
+                              if (value && typeof value === 'object' && !isNaN(value.salary) && value.hasOwnProperty('salary')) {
+                                  totalSalary += value.salary;
                               } else {
-                                  // Викликаємо функцію logError, якщо знайдено неправильне значення
                                   logError(value.salary, 'salary');
                               }
                           }
                       } else {
-                          // Якщо значення не є масивом, рекурсивно викликаємо isNested для обробки вкладених об'єктів
-                          result += isNested(obj[key]);
+                          totalSalary += calculateTotalSalary(obj[key]);
                       }
-                  }
               }
-
-              return result;
+              return totalSalary;
           }
 
           function logError(value, text) {
-              console.log(`У нас проблемка, значення ${text} одного об'єкта = ${value}, але це не вплине на виконання коду`);
+              console.log(`У нас проблемка: значення ${text} одного об'єкта = ${value}, але це не вплине на виконання коду`);
           }
 
           let nestedObj = {
@@ -59,7 +54,7 @@
               }
           };
 
-          console.log(`Вам потрібно заплатити своїм співробітникам: ${isNested(nestedObj)}$`);
+          console.log(`Вам потрібно заплатити своїм співробітникам: ${calculateTotalSalary(nestedObj)}$`);
       </script>
 </body>
 
